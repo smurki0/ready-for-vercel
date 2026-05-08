@@ -1,0 +1,876 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-cairo);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-dusty-pink: #C4A4A4;
+  --color-warm-beige: #F5EDE6;
+  --color-light-pink: #FDE8E8;
+  --color-deep-rose: #8B6F6F;
+  --color-soft-cream: #FFF8F3;
+  --color-elegant-gold: #D4A574;
+  --color-charcoal: #2D2926;
+}
+
+:root {
+  --radius: 0.75rem;
+  --background: #FFF8F3;
+  --foreground: #2D2926;
+  --card: #FFFFFF;
+  --card-foreground: #2D2926;
+  --popover: #FFFFFF;
+  --popover-foreground: #2D2926;
+  --primary: #C4A4A4;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F5EDE6;
+  --secondary-foreground: #2D2926;
+  --muted: #F5EDE6;
+  --muted-foreground: #8B6F6F;
+  --accent: #FDE8E8;
+  --accent-foreground: #2D2926;
+  --destructive: #E74C3C;
+  --border: #E8D5C4;
+  --input: #E8D5C4;
+  --ring: #C4A4A4;
+  --chart-1: #C4A4A4;
+  --chart-2: #D4A574;
+  --chart-3: #8B6F6F;
+  --chart-4: #F5EDE6;
+  --chart-5: #FDE8E8;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #2D2926;
+  --sidebar-primary: #C4A4A4;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F5EDE6;
+  --sidebar-accent-foreground: #2D2926;
+  --sidebar-border: #E8D5C4;
+  --sidebar-ring: #C4A4A4;
+}
+
+/* ─── Warm Dark Mode Palette ──────────────────────────────────────────── */
+.dark {
+  --background: #1A1614;
+  --foreground: #F0E6DC;
+  --card: #252220;
+  --card-foreground: #F0E6DC;
+  --popover: #252220;
+  --popover-foreground: #F0E6DC;
+  --primary: #D4A0A0;
+  --primary-foreground: #1A1614;
+  --secondary: #2A2522;
+  --secondary-foreground: #F0E6DC;
+  --muted: #2A2522;
+  --muted-foreground: #C9B8A8;
+  --accent: #3D2828;
+  --accent-foreground: #F0E6DC;
+  --destructive: #E74C3C;
+  --border: #3A3532;
+  --input: #3A3532;
+  --ring: #D4A0A0;
+  --chart-1: #D4A0A0;
+  --chart-2: #D4A574;
+  --chart-3: #B8A090;
+  --chart-4: #2A2522;
+  --chart-5: #3D2828;
+  --sidebar: #231F1C;
+  --sidebar-foreground: #F0E6DC;
+  --sidebar-primary: #D4A0A0;
+  --sidebar-primary-foreground: #1A1614;
+  --sidebar-accent: #2A2522;
+  --sidebar-accent-foreground: #F0E6DC;
+  --sidebar-border: #3A3532;
+  --sidebar-ring: #D4A0A0;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+    outline-color: rgba(var(--ring), 0.5);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Luxury selection */
+::selection {
+  background-color: #C4A4A4;
+  color: white;
+}
+
+.dark ::selection {
+  background-color: #D4A574;
+  color: #1A1614;
+}
+
+/* RTL specific */
+[dir="rtl"] {
+  text-align: right;
+}
+
+/* Product image hover zoom */
+.product-image-zoom {
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.product-image-zoom:hover {
+  transform: scale(1.08);
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Slide in from right (for RTL, slides from left) */
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+[dir="rtl"] .slide-in-panel {
+  animation: slideInLeft 0.3s ease-out forwards;
+}
+
+:not([dir="rtl"]) .slide-in-panel {
+  animation: slideInRight 0.3s ease-out forwards;
+}
+
+/* Skeleton shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, var(--muted) 25%, var(--secondary) 50%, var(--muted) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Elegant underline */
+.luxury-underline {
+  position: relative;
+}
+
+.luxury-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  right: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--primary);
+  transition: width 0.3s ease;
+}
+
+[dir="rtl"] .luxury-underline:hover::after {
+  width: 100%;
+}
+
+.luxury-underline:hover::after {
+  width: 100%;
+}
+
+/* ─── Dark Mode Enhancements ────────────────────────────────────────── */
+
+/* Dark mode card glow effect */
+.dark .dark-glow-card {
+  box-shadow: 0 0 20px rgba(212, 165, 116, 0.06), 0 0 40px rgba(196, 164, 164, 0.03);
+  transition: box-shadow 0.4s ease;
+}
+
+.dark .dark-glow-card:hover {
+  box-shadow: 0 0 25px rgba(212, 165, 116, 0.12), 0 0 50px rgba(196, 164, 164, 0.06);
+}
+
+/* Dark mode gold shimmer effect on elements */
+@keyframes goldShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.dark .dark-gold-shimmer {
+  background: linear-gradient(90deg, #D4A574 0%, #E8C9A0 25%, #D4A574 50%, #E8C9A0 75%, #D4A574 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldShimmer 4s linear infinite;
+}
+
+/* Dark mode subtle dot pattern background */
+.dark .dark-dot-pattern {
+  background-image: radial-gradient(circle, rgba(212, 165, 116, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Dark mode subtle line pattern background */
+.dark .dark-line-pattern {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(212, 165, 116, 0.03) 10px,
+    rgba(212, 165, 116, 0.03) 11px
+  );
+}
+
+/* Dark mode section gradient backgrounds */
+.dark .dark-section-gradient {
+  background: linear-gradient(180deg, rgba(35, 31, 28, 0.5) 0%, rgba(26, 22, 20, 1) 50%, rgba(35, 31, 28, 0.5) 100%);
+}
+
+/* Dark mode enhanced border glow on hover */
+.dark .dark-border-glow {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dark .dark-border-glow:hover {
+  border-color: rgba(212, 165, 116, 0.4);
+  box-shadow: 0 0 15px rgba(212, 165, 116, 0.08);
+}
+
+/* Dark mode elevated card style */
+.dark .dark-elevated-card {
+  background: linear-gradient(135deg, #2A2522 0%, #231F1C 100%);
+  border-color: rgba(212, 165, 116, 0.15);
+}
+
+/* Dark mode pink glow effect */
+.dark .dark-pink-glow {
+  box-shadow: 0 0 20px rgba(196, 164, 164, 0.08);
+}
+
+.dark .dark-pink-glow:hover {
+  box-shadow: 0 0 30px rgba(196, 164, 164, 0.15);
+}
+
+/* Gold pulse animation for dark mode */
+@keyframes goldPulse {
+  0%, 100% { box-shadow: 0 0 5px rgba(212, 165, 116, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(212, 165, 116, 0.4); }
+}
+
+.dark .dark-gold-pulse {
+  animation: goldPulse 3s ease-in-out infinite;
+}
+
+/* Mobile-friendly admin horizontal tab scroll */
+.admin-tab-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.admin-tab-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Touch-friendly minimum target size */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Pull to refresh indicator */
+@keyframes pullRefresh {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.pull-refresh-spinning {
+  animation: pullRefresh 0.8s linear infinite;
+}
+
+/* FAB button animation */
+@keyframes fabBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.fab-bounce {
+  animation: fabBounce 2s ease-in-out infinite;
+}
+
+/* Animated gradient rotation for hero CTA border */
+@keyframes gradientRotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient-rotate {
+  background-size: 300% 300%;
+  animation: gradientRotate 4s ease infinite;
+}
+
+/* Mouse-follow gradient border on product cards */
+@keyframes borderGlow {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+/* Price flash animation for discounts */
+@keyframes priceFlash {
+  0% { background-color: transparent; }
+  15% { background-color: rgba(212, 165, 116, 0.25); }
+  30% { background-color: transparent; }
+  45% { background-color: rgba(212, 165, 116, 0.15); }
+  100% { background-color: transparent; }
+}
+
+.animate-price-flash {
+  animation: priceFlash 1.2s ease-out;
+}
+
+/* Cart pop animation */
+@keyframes cartPop {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.15); }
+  50% { transform: scale(0.95); }
+  70% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.animate-cart-pop {
+  animation: cartPop 0.5s ease-out;
+}
+
+/* Green checkmark flash */
+@keyframes checkFlash {
+  0% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 0; transform: scale(1); }
+}
+
+.animate-check-flash {
+  animation: checkFlash 0.6s ease-out;
+}
+
+/* Animated gradient for shipping bar */
+@keyframes shippingGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-shipping-gradient {
+  background-size: 200% 100%;
+  animation: shippingGradient 2s ease infinite;
+}
+
+/* Quantity slide animations */
+@keyframes slideInRight {
+  from { transform: translateX(20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutLeft {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(-20px); opacity: 0; }
+}
+
+.animate-qty-in {
+  animation: slideInRight 0.3s ease-out;
+}
+
+/* ─── Premium CSS Animations ─────────────────────────────────────────── */
+
+/* Float animation - gentle vertical float */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Gold pulsing box-shadow animation */
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 5px rgba(212, 165, 116, 0.15); }
+  50% { box-shadow: 0 0 20px rgba(212, 165, 116, 0.35), 0 0 40px rgba(212, 165, 116, 0.1); }
+}
+
+.animate-pulse-gold {
+  animation: pulse-gold 2s ease-in-out infinite;
+}
+
+/* Horizontal shimmer slide for loading states */
+@keyframes shimmer-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer-slide {
+  animation: shimmer-slide 2s linear infinite;
+}
+
+/* Gentle breathing scale animation */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.animate-breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+/* Reveal from below with opacity */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-reveal-up {
+  animation: reveal-up 0.6s ease-out forwards;
+}
+
+/* ─── Premium Glass Morphism ─────────────────────────────────────────── */
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+
+.glass-dark {
+  background: rgba(26, 22, 20, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(212, 165, 116, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.glass-gold {
+  background: rgba(212, 165, 116, 0.12);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(212, 165, 116, 0.25);
+  box-shadow: 0 8px 32px rgba(212, 165, 116, 0.08);
+}
+
+/* ─── Enhanced Dark Mode Utilities ───────────────────────────────────── */
+
+/* Golden text glow for dark mode headings and accents */
+.dark .dark-text-glow {
+  text-shadow: 0 0 10px rgba(212, 165, 116, 0.3), 0 0 20px rgba(212, 165, 116, 0.1);
+}
+
+/* Enhanced card hover with golden border glow */
+.dark .dark-card-hover {
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+}
+
+.dark .dark-card-hover:hover {
+  border-color: rgba(212, 165, 116, 0.5);
+  box-shadow: 0 0 20px rgba(212, 165, 116, 0.1), 0 0 40px rgba(212, 165, 116, 0.05);
+  transform: translateY(-2px);
+}
+
+/* Section fade at edges with golden tint */
+.dark .dark-section-fade {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+}
+
+/* ─── RTL-Specific Enhancements ──────────────────────────────────────── */
+
+/* Flip element horizontally in RTL context */
+[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+}
+
+/* Ensure animations respect RTL direction */
+[dir="rtl"] .animate-shimmer-slide {
+  animation-direction: reverse;
+}
+
+/* RTL-aware reveal (from left in RTL instead of from below-right) */
+[dir="rtl"] .animate-reveal-up {
+  animation-name: reveal-up-rtl;
+}
+
+@keyframes reveal-up-rtl {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scaleX(-0.02);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleX(0);
+  }
+}
+
+/* ─── Improved Scrollbar Styling ─────────────────────────────────────── */
+
+/* Dark mode scrollbar with darker track and gold thumb */
+.dark ::-webkit-scrollbar {
+  width: 7px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #1A1614;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(212, 165, 116, 0.4);
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 165, 116, 0.6);
+}
+
+/* Firefox dark mode scrollbar */
+.dark * {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 165, 116, 0.4) #1A1614;
+}
+
+/* Overlay scrollbar styles for better UX */
+@supports (overflow: overlay) {
+  ::-webkit-scrollbar {
+    width: 6px;
+    overflow: overlay;
+  }
+
+  .dark ::-webkit-scrollbar {
+    width: 7px;
+    overflow: overlay;
+  }
+}
+
+/* Thin overlay scrollbar on hover only */
+.scrollbar-hover::-webkit-scrollbar {
+  width: 4px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.scrollbar-hover:hover::-webkit-scrollbar {
+  opacity: 1;
+  width: 6px;
+}
+
+.scrollbar-hover {
+  scrollbar-width: thin;
+}
+
+/* ─── Luxury Ribbon Badge ──────────────────────────────────────────── */
+
+.ribbon-badge {
+  position: absolute;
+  z-index: 10;
+  padding: 4px 28px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+  background: linear-gradient(135deg, #D4A574 0%, #C4945A 50%, #D4A574 100%);
+  transform: rotate(-45deg);
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(212, 165, 116, 0.35);
+  clip-path: polygon(8% 0%, 92% 0%, 100% 50%, 92% 100%, 8% 100%, 0% 50%);
+}
+
+.ribbon-badge-top-right {
+  top: 16px;
+  right: -28px;
+}
+
+.ribbon-badge-top-left {
+  top: 16px;
+  left: -28px;
+}
+
+[dir="rtl"] .ribbon-badge-top-left {
+  left: auto;
+  right: -28px;
+}
+
+[dir="rtl"] .ribbon-badge-top-right {
+  right: auto;
+  left: -28px;
+}
+
+/* ─── Animated Text Gradient ──────────────────────────────────────── */
+
+@keyframes textGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-text-gradient {
+  background: linear-gradient(
+    270deg,
+    #D4A574 0%,
+    #E8C9A0 20%,
+    #C4A4A4 40%,
+    #D4A574 60%,
+    #E8C9A0 80%,
+    #C4A4A4 100%
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textGradient 4s ease infinite;
+}
+
+/* ─── Luxury Card Texture Overlay ──────────────────────────────────── */
+
+.luxury-texture {
+  position: relative;
+}
+
+.luxury-texture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.025;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(212, 165, 116, 0.3) 2px,
+      rgba(212, 165, 116, 0.3) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(212, 165, 116, 0.3) 2px,
+      rgba(212, 165, 116, 0.3) 3px
+    );
+  mix-blend-mode: overlay;
+}
+
+.dark .luxury-texture::before {
+  opacity: 0.04;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(212, 165, 116, 0.5) 2px,
+      rgba(212, 165, 116, 0.5) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(212, 165, 116, 0.5) 2px,
+      rgba(212, 165, 116, 0.5) 3px
+    );
+}
+
+/* ─── Animated Border Gradient (Spinning Golden Glow) ──────────────── */
+
+@keyframes borderRotate {
+  0% { --border-angle: 0deg; transform: rotate(0deg); }
+  100% { --border-angle: 360deg; transform: rotate(360deg); }
+}
+
+@keyframes borderRotatePseudo {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-border-glow {
+  position: relative;
+  border: none !important;
+  z-index: 0;
+}
+
+.animate-border-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    #D4A574,
+    #E8C9A0,
+    #C4A4A4,
+    transparent,
+    transparent,
+    #C4A4A4,
+    #D4A574
+  );
+  animation: borderRotatePseudo 4s linear infinite;
+}
+
+.animate-border-glow::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--card);
+}
+
+/* ─── Premium Hover Card Lift ──────────────────────────────────────── */
+
+.card-lift-hover {
+  transition: transform 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, box-shadow;
+}
+
+.card-lift-hover:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.08),
+    0 0 20px rgba(212, 165, 116, 0.1),
+    0 0 40px rgba(212, 165, 116, 0.05);
+}
+
+.dark .card-lift-hover:hover {
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.25),
+    0 0 20px rgba(212, 165, 116, 0.15),
+    0 0 40px rgba(212, 165, 116, 0.08);
+}
+
+/* ─── Premium Skeleton with Golden Shimmer ─────────────────────────── */
+
+@keyframes skeletonLuxury {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton-luxury {
+  background: linear-gradient(
+    90deg,
+    var(--muted) 25%,
+    rgba(212, 165, 116, 0.15) 37%,
+    var(--muted) 50%,
+    rgba(212, 165, 116, 0.1) 62%,
+    var(--muted) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeletonLuxury 1.8s ease-in-out infinite;
+  border-radius: var(--radius);
+}
+
+.dark .skeleton-luxury {
+  background: linear-gradient(
+    90deg,
+    #2A2522 25%,
+    rgba(212, 165, 116, 0.12) 37%,
+    #2A2522 50%,
+    rgba(212, 165, 116, 0.08) 62%,
+    #2A2522 75%
+  );
+  background-size: 200% 100%;
+  animation: skeletonLuxury 1.8s ease-in-out infinite;
+}
+
+/* ─── Mobile Bottom Nav Safe Area ──────────────────────────────────── */
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.mb-safe {
+  margin-bottom: env(safe-area-inset-bottom, 0px);
+}

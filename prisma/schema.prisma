@@ -1,0 +1,300 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  phone     String?
+  address   String?
+  role      String   @default("user")
+  banned    Boolean  @default(false)
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orders     Order[]
+  cartItems  CartItem[]
+  wishlist   WishlistItem[]
+  reviews    Review[]
+}
+
+model Category {
+  id          String @id @default(cuid())
+  nameAr      String
+  nameEn      String
+  slug        String @unique
+  image       String?
+  description String?
+  order       Int    @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  products Product[]
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  nameAr      String
+  nameEn      String
+  descriptionAr String?
+  descriptionEn String?
+  price       Float
+  discount    Float    @default(0)
+  images      String   @default("[]")
+  sizes       String   @default("[]")
+  colors      String   @default("[]")
+  stock       Int      @default(0)
+  featured    Boolean  @default(false)
+  active      Boolean  @default(true)
+  categoryId  String
+
+  // ─── Card Display Fields ───────────────────────────────────────────────
+  subtitleAr    String?   // عنوان فرعي للكارت
+  subtitleEn    String?   // subtitle on card
+  brand         String?   // الماركة/العلامة التجارية
+  badgeTextAr   String?   // نص شارة مخصصة (حصري، الأكثر مبيعاً...)
+  badgeTextEn   String?   // custom badge text
+  isNew         Boolean   @default(false)  // عرض شارة "جديد" يدوياً
+  freeShipping  Boolean   @default(false)  // شحن مجاني
+  freeShippingThreshold Float?  // حد الشحن المجاني لهذا المنتج
+
+  // ─── Product Details ───────────────────────────────────────────────────
+  sku           String?   // كود المنتج
+  tags          String    @default("[]")   // وسوم البحث (JSON)
+  materialAr    String?   // الخامة بالعربية
+  materialEn    String?   // material in English
+  weight        Float?    // الوزن (كجم)
+
+  // ─── Order Constraints ─────────────────────────────────────────────────
+  minOrderQty   Int       @default(1)     // الحد الأدنى للطلب
+  maxOrderQty   Int?                       // الحد الأقصى للطلب
+
+  // ─── Shipping & Delivery ───────────────────────────────────────────────
+  shippingTimeAr String?   // مدة التوصيل بالعربية
+  shippingTimeEn String?   // shipping time in English
+  videoUrl       String?   // رابط فيديو المنتج
+
+  // ─── Care & Returns ────────────────────────────────────────────────────
+  careAr         String?   // تعليمات العناية بالعربية
+  careEn         String?   // care instructions in English
+  returnPolicyAr String?   // سياسة الإرجاع بالعربية
+  returnPolicyEn String?   // return policy in English
+
+  // ─── SEO ───────────────────────────────────────────────────────────────
+  metaTitle       String?   // عنوان SEO
+  metaDescription String?   // وصف SEO
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+  wishlist   WishlistItem[]
+  reviews    Review[]
+}
+
+model CartItem {
+  id        String @id @default(cuid())
+  userId    String
+  productId String
+  quantity  Int    @default(1)
+  size      String?
+  color     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId, size, color])
+}
+
+model Order {
+  id          String @id @default(cuid())
+  userId      String
+  status      String @default("pending")
+  total       Float
+  customerName  String
+  customerPhone String
+  address       String
+  notes            String?  // ملاحظات العميل
+  deliveryNotes    String?  // ملاحظات التوصيل (إدارية)
+  paymentMethod    String   @default("cod") // طريقة الدفع: cod | credit_card | apple_pay | vodafone_cash | instapay
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[]
+}
+
+model OrderItem {
+  id        String @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Float
+  size      String?
+  color     String?
+  createdAt DateTime @default(now())
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  @@unique([orderId, productId, size, color])
+}
+
+model WishlistItem {
+  id        String @id @default(cuid())
+  userId    String
+  productId String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  rating    Int
+  comment   String?
+  adminReply String?   // رد الإدارة على التعليق
+  approved  Boolean  @default(true)  // معتمد / مراجعة
+  pinned    Boolean  @default(false) // مثبت
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+}
+
+model SiteSettings {
+  id      String @id @default(cuid())
+  key     String @unique
+  value   String
+  updatedAt DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─── Advanced Discount System ───────────────────────────────────────────────
+
+model DiscountCode {
+  id              String   @id @default(cuid())
+  code            String   @unique
+  descriptionAr   String?
+  descriptionEn   String?
+  type            String   @default("percentage") // percentage | fixed | free_shipping
+  value           Float    @default(0)
+  minOrderValue   Float    @default(0)
+  maxDiscount     Float?   // cap for percentage discounts
+  usageLimit      Int?     // total usage limit
+  usageCount      Int      @default(0)
+  perUserLimit    Int      @default(1)
+  autoApply       Boolean  @default(false)
+  startDate       DateTime?
+  endDate         DateTime?
+  active          Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  usages DiscountUsage[]
+}
+
+model DiscountUsage {
+  id           String   @id @default(cuid())
+  discountId   String
+  userId       String
+  orderId      String?
+  createdAt    DateTime @default(now())
+
+  discount DiscountCode @relation(fields: [discountId], references: [id], onDelete: Cascade)
+
+  @@unique([discountId, userId, orderId])
+}
+
+// ─── Dynamic Shipping System ───────────────────────────────────────────────
+
+model ShippingZone {
+  id              String   @id @default(cuid())
+  nameAr          String
+  nameEn          String
+  region          String   @unique // e.g. "cairo", "giza", "alexandria"
+  price           Float    @default(0)
+  freeAbove       Float?   // free shipping if order total above this
+  estimatedDays   String   @default("3-5") // e.g. "3-5"
+  active          Boolean  @default(true)
+  order           Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// ─── Banner Management System ───────────────────────────────────────────────
+
+model Banner {
+  id          String    @id @default(cuid())
+  titleAr     String?
+  titleEn     String?
+  subtitleAr  String?
+  subtitleEn  String?
+  image       String
+  linkType    String?   // product | category | url | none
+  linkId      String?   // product id or category id or url
+  position    String    @default("hero") // hero | middle | sidebar | footer
+  order       Int       @default(0)
+  startDate   DateTime?
+  endDate     DateTime?
+  active      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// ─── Audit Logs ────────────────────────────────────────────────────────────
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String   // create | update | delete | login | logout
+  entity    String   // product | order | user | category | discount | shipping | banner | settings
+  entityId  String?
+  details   String?  // JSON string with changed fields
+  ipAddress String?
+  createdAt DateTime @default(now())
+}
+
+// ─── Notifications ──────────────────────────────────────────────────────────
+
+model Notification {
+  id        String   @id @default(cuid())
+  type      String   // order | user | discount | system
+  titleAr   String
+  titleEn   String
+  messageAr String
+  messageEn String
+  read      Boolean  @default(false)
+  link      String?  // optional link to related entity
+  createdAt DateTime @default(now())
+}
