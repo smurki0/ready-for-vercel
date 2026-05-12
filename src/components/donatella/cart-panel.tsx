@@ -29,7 +29,7 @@ import { safeJsonParse, seededRandom, useMounted } from '@/lib/utils'
 import { toast } from 'sonner'
 
 // Default free shipping threshold (used as fallback when API is unavailable)
-const DEFAULT_FREE_SHIPPING_THRESHOLD = 500
+const DEFAULT_FREE_SHIPPING_THRESHOLD = 3500
 
 // Suggested products - fetched from API
 interface SuggestedProduct {
