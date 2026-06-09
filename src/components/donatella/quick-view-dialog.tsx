@@ -160,11 +160,11 @@ function QualityBadges() {
 // Delivery estimation with city-specific timing
 function DeliveryEstimation() {
   const cities = [
-    { name: 'الرياض', days: '1-2' },
-    { name: 'جدة', days: '2-3' },
-    { name: 'الدمام', days: '2-3' },
-    { name: 'مكة', days: '2-3' },
-    { name: 'أخرى', days: '3-5' },
+    { name: 'القاهره', days: '1-2' },
+    { name: 'الاسكندرية', days: '2-3' },
+    { name: 'دمنهور', days: '2-3' },
+    { name: 'المنصوره', days: '2-3' },
+    { name: 'كفر الدوار', days: '3-5' },
   ]
 
   return (
